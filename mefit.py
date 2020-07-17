@@ -27,8 +27,7 @@ def route():
                     data3 = pd.read_csv(filepath)
                     rows = len(data3.index)
                     count += 1
-                    print("First")
-            if name == "mefitnum":
+            if name == "MeFitGeneralData":
                     data1 = pd.read_csv(filepath)
                     count += 1
             if count == 2:    
@@ -44,10 +43,8 @@ def find_file(data3,data1,rows):
                 name = file.split(".csv")[0]
                 for i in range(0,rows):
                     location = data3.iat[i,0].replace(" ", "")
-                    print(location,name,count)
                     if name == location:         
                         data2 = pd.read_csv(filepath)
-                        print("Last")
                         read_data(data1,data2,location)
                 
 
@@ -67,21 +64,25 @@ def read_data(data1, data2, location):
             if data1.iat[i,1] == (str)(k) and data1.iat[i,0] == data2.iat[0,0] and data1.iat[i,1] in me_data[data2.iat[0,0]] and location == data2.iat[1,0]: 
                 for slot,item in me_data[data2.iat[0,0]].items():
                     if data1.iat[i,1] == slot:
-                        me_data[data1.iat[i,0]][data1.iat[i,1]] = ((item[0],item[1]+1))
+                        me_data[data1.iat[i,0]][data1.iat[i,1]] = ((item[0],item[1]+1,item[2]+data1.iat[i,2]*data1.iat[i,3],data1.iat[i,4],data1.iat[i,5]))
                         #me_data --> {machine id:{slot info: ((item,count of how many times item has shown up))}}
             elif data1.iat[i,1] == (str)(k) and data1.iat[i,0] == data2.iat[0,0] and location == data2.iat[1,0]:
-                me_data[data1.iat[i,0]][data1.iat[i,1]] = ((v,1))
+                me_data[data1.iat[i,0]][data1.iat[i,1]] = ((v,1,data1.iat[i,2]*data1.iat[i,3],data1.iat[i,4],data1.iat[i,5]))
                 #if the slot item is not in the inner dictionary then set the freq of the item to 1
     count += 1
     report = open(f"report{count}.txt", 'a')
     report.write(location+'\n')
     for i,j in me_data.items():
-        print(j.items())
+        #print(j.items())
         for k,v in j.items():
             report.write(f'{i}-->{k}-->{v}\n')
     report.close()
-
+    
+    
+       
+      
 
 if __name__ == '__main__':
     route()   
+    
     
