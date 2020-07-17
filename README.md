@@ -1,2 +1,2 @@
 # Mefit
-Various python scritpts for analysis of mefit data reports 
+Various python scripts for analysis of mefit data reports 
